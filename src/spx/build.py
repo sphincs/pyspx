@@ -3,7 +3,7 @@ from cffi import FFI
 ffi = FFI()
 
 api_contents = []
-with open("src/sphincsplus/ref/api.h", "r") as apifile:
+with open("src/sphincsplus/libspx.h", "r") as apifile:
     # This is very specific to api.h in the sphincsplus reference code
     for line in apifile.readlines():
         if line.startswith('#'):
@@ -12,5 +12,5 @@ with open("src/sphincsplus/ref/api.h", "r") as apifile:
 api_contents =  '\n'.join(api_contents)
 ffi.cdef(api_contents)
 
-extra_objects = ["src/sphincsplus/ref/libspx.so"]
+extra_objects = ["src/sphincsplus/libspx.so"]
 ffi.set_source("_spx", api_contents, extra_objects=extra_objects)

@@ -1,6 +1,6 @@
 
 import pytest
-import spx
+import spx.shake256_192s as spx
 
 import os
 
