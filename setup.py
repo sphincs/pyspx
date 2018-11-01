@@ -19,7 +19,7 @@ setup(
     setup_requires=["cffi>=1.0.0"],
     tests_require=["pytest", "cffi>=1.0.0"],
     cffi_modules=[
-        "src/spx/build.py:ffi",
+        "src/pyspx/build.py:ffi",
     ],
 )
 

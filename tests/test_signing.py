@@ -1,12 +1,12 @@
 
 import pytest
-import spx.shake256_192s as spx
+import pyspx.shake256_192s as pyspx
 
 import os
 
 
 def test_sign_verify():
-    publickey, secretkey = spx.generate_keypair()
+    publickey, secretkey = pyspx.generate_keypair()
     message = os.urandom(32)
-    signature = spx.sign(message, secretkey)
-    assert spx.verify(message, signature, publickey)
+    signature = pyspx.sign(message, secretkey)
+    assert pyspx.verify(message, signature, publickey)
