@@ -1,52 +1,66 @@
-from _spx import ffi, lib
 
+class PySPXBindings(object):
 
-crypto_sign_BYTES = lib.crypto_sign_spx_shake256_192s_bytes()
-crypto_sign_SECRETKEYBYTES = lib.crypto_sign_spx_shake256_192s_secretkeybytes()
-crypto_sign_PUBLICKEYBYTES = lib.crypto_sign_spx_shake256_192s_publickeybytes()
-crypto_sign_SEEDBYTES = lib.crypto_sign_spx_shake256_192s_seedbytes()
+    def __init__(self, ffi, lib):
+        self.ffi = ffi
+        self.lib = lib
 
-# TODO make this more generic for parameter sets that are not shake256_192s
+    @property
+    def crypto_sign_BYTES(self):
+        return self.lib.crypto_sign_bytes()
 
-def sign(message, secretkey):
-    if not isinstance(message, bytes):
-        raise TypeError('Input message must be of type bytes')
-    if not isinstance(secretkey, bytes):
-        raise TypeError('Secret key must be of type bytes')
+    @property
+    def crypto_sign_SECRETKEYBYTES(self):
+        return self.lib.crypto_sign_secretkeybytes()
 
-    if len(secretkey) != crypto_sign_SECRETKEYBYTES:
-        raise MemoryError('Secret key is of length {}, expected {}'.format(len(secretkey), crypto_sign_SECRETKEYBYTES))
+    @property
+    def crypto_sign_PUBLICKEYBYTES(self):
+        return self.lib.crypto_sign_publickeybytes()
 
-    sm = ffi.new("unsigned char[]", len(message) + crypto_sign_BYTES)
-    mlen = ffi.cast("unsigned long long", len(message))
-    smlen = ffi.new("unsigned long long *")
-    lib.crypto_sign_spx_shake256_192s(sm, smlen, message, mlen, secretkey)
-    return bytes(sm)[:crypto_sign_BYTES]
+    @property
+    def crypto_sign_SEEDBYTES(self):
+        return self.lib.crypto_sign_seedbytes()
 
+    def sign(self, message, secretkey):
+        if not isinstance(message, bytes):
+            raise TypeError('Input message must be of type bytes')
+        if not isinstance(secretkey, bytes):
+            raise TypeError('Secret key must be of type bytes')
 
-def verify(message, signature, publickey):
-    if not isinstance(message, bytes):
-        raise TypeError('Message must be of type bytes')
-    if not isinstance(signature, bytes):
-        raise TypeError('Signature must be of type bytes')
-    if not isinstance(publickey, bytes):
-        raise TypeError('Public key must be of type bytes')
+        if len(secretkey) != self.crypto_sign_SECRETKEYBYTES:
+            raise MemoryError('Secret key is of length {}, expected {}'
+                              .format(len(secretkey), self.crypto_sign_SECRETKEYBYTES))
 
-    if len(publickey) != crypto_sign_PUBLICKEYBYTES:
-        raise MemoryError('Public key is of length {}, expected {}'.format(len(publickey), crypto_sign_PUBLICKEYBYTES))
-    if len(signature) != crypto_sign_BYTES:
-        raise MemoryError('Signature is of length {}, expected {}'.format(len(signature), crypto_sign_BYTES))
+        sm = self.ffi.new("unsigned char[]", len(message) + self.crypto_sign_BYTES)
+        mlen = self.ffi.cast("unsigned long long", len(message))
+        smlen = self.ffi.new("unsigned long long *")
+        self.lib.crypto_sign(sm, smlen, message, mlen, secretkey)
+        return bytes(sm)[:self.crypto_sign_BYTES]
 
-    smlen = ffi.cast("unsigned long long", len(message) + crypto_sign_BYTES)
-    mlen = ffi.new("unsigned long long *")
-    m = ffi.new("unsigned char[]", int(smlen))
-    sm = ffi.new("unsigned char[]", signature + message)
-    return int(lib.crypto_sign_spx_shake256_192s_open(m, mlen, sm, smlen, publickey)) == 0
+    def verify(self, message, signature, publickey):
+        if not isinstance(message, bytes):
+            raise TypeError('Message must be of type bytes')
+        if not isinstance(signature, bytes):
+            raise TypeError('Signature must be of type bytes')
+        if not isinstance(publickey, bytes):
+            raise TypeError('Public key must be of type bytes')
 
+        if len(publickey) != self.crypto_sign_PUBLICKEYBYTES:
+            raise MemoryError('Public key is of length {}, expected {}'
+                              .format(len(publickey), self.crypto_sign_PUBLICKEYBYTES))
+        if len(signature) != self.crypto_sign_BYTES:
+            raise MemoryError('Signature is of length {}, expected {}'
+                              .format(len(signature), self.crypto_sign_BYTES))
 
-def generate_keypair():
-    pk = ffi.new("unsigned char[]", crypto_sign_PUBLICKEYBYTES)
-    sk = ffi.new("unsigned char[]", crypto_sign_SECRETKEYBYTES)
-    lib.crypto_sign_spx_shake256_192s_keypair(pk, sk)
+        smlen = self.ffi.cast("unsigned long long", len(message) + self.crypto_sign_BYTES)
+        mlen = self.ffi.new("unsigned long long *")
+        m = self.ffi.new("unsigned char[]", int(smlen))
+        sm = self.ffi.new("unsigned char[]", signature + message)
+        return int(self.lib.crypto_sign_open(m, mlen, sm, smlen, publickey)) == 0
 
-    return bytes(pk), bytes(sk)
+    def generate_keypair(self):
+        pk = self.ffi.new("unsigned char[]", self.crypto_sign_PUBLICKEYBYTES)
+        sk = self.ffi.new("unsigned char[]", self.crypto_sign_SECRETKEYBYTES)
+        self.lib.crypto_sign_keypair(pk, sk)
+
+        return bytes(pk), bytes(sk)
