@@ -29,9 +29,11 @@ class PySPXBindings(object):
 
         if len(secretkey) != self.crypto_sign_SECRETKEYBYTES:
             raise MemoryError('Secret key is of length {}, expected {}'
-                              .format(len(secretkey), self.crypto_sign_SECRETKEYBYTES))
+                              .format(len(secretkey),
+                                      self.crypto_sign_SECRETKEYBYTES))
 
-        sm = self.ffi.new("unsigned char[]", len(message) + self.crypto_sign_BYTES)
+        sm = self.ffi.new("unsigned char[]",
+                          len(message) + self.crypto_sign_BYTES)
         mlen = self.ffi.cast("unsigned long long", len(message))
         smlen = self.ffi.new("unsigned long long *")
         self.lib.crypto_sign(sm, smlen, message, mlen, secretkey)
@@ -47,16 +49,18 @@ class PySPXBindings(object):
 
         if len(publickey) != self.crypto_sign_PUBLICKEYBYTES:
             raise MemoryError('Public key is of length {}, expected {}'
-                              .format(len(publickey), self.crypto_sign_PUBLICKEYBYTES))
+                              .format(len(publickey),
+                                      self.crypto_sign_PUBLICKEYBYTES))
         if len(signature) != self.crypto_sign_BYTES:
             raise MemoryError('Signature is of length {}, expected {}'
                               .format(len(signature), self.crypto_sign_BYTES))
 
-        smlen = self.ffi.cast("unsigned long long", len(message) + self.crypto_sign_BYTES)
+        smlen = self.ffi.cast("unsigned long long",
+                              len(message) + self.crypto_sign_BYTES)
         mlen = self.ffi.new("unsigned long long *")
         m = self.ffi.new("unsigned char[]", int(smlen))
         sm = self.ffi.new("unsigned char[]", signature + message)
-        return int(self.lib.crypto_sign_open(m, mlen, sm, smlen, publickey)) == 0
+        return self.lib.crypto_sign_open(m, mlen, sm, smlen, publickey) == 0
 
     def generate_keypair(self):
         pk = self.ffi.new("unsigned char[]", self.crypto_sign_PUBLICKEYBYTES)

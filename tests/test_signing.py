@@ -1,5 +1,3 @@
-
-import pytest
 import pyspx.shake256_192s as pyspx
 
 import os

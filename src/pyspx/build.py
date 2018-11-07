@@ -27,7 +27,7 @@ def make_ffi(paramset):
             if line.startswith('#'):
                 continue  # we ignore all C preprocessor macros
             api_contents.append(line)
-    api_contents =  '\n'.join(api_contents)
+    api_contents = '\n'.join(api_contents)
     ffi.cdef(api_contents)
 
     sources = glob.glob(os.path.join(spx_ref_dir, "*.c"))
