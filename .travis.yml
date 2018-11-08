@@ -16,4 +16,4 @@ install:
 
 script:
   - pytest
-  - flake8
+  - flake8 src/pyspx
