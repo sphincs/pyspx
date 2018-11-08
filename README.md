@@ -7,7 +7,7 @@ Currently, the bindings only wrap the reference code. Code optimized for specifi
 
 ### Installation
 
-The package is available on the PyPI and can be installed by simply calling `pip install pyspx`. Note that it may take a few moments to compile the SPHINCS+ code for your platform.
+The package is [available on PyPI](https://pypi.org/project/PySPX/) and can be installed by simply calling `pip install pyspx`. Note that it may take a few moments to compile the SPHINCS+ code for your platform.
 
 ### API
 
