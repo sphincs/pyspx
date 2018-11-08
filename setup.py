@@ -55,15 +55,22 @@ class clean(_clean):
         super().run()
 
 
+with open('README.md') as f:
+    long_description = f.read()
+
 setup(
     name="PySPX",
     version="0.1.0",
     packages=['pyspx'],
     author="Joost Rijneveld, Peter Schwabe",
     author_email='contact@sphincs.org',
+    url="https://github.com/sphincs/pyspx",
+    description='Python bindings for SPHINCS+',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     package_dir={'': 'src'},
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
         'Programming Language :: Python :: 3',
