@@ -65,7 +65,7 @@ with open('README.md') as f:
 
 setup(
     name="PySPX",
-    version="0.1.0",
+    version="0.2.0",
     packages=['pyspx'],
     author="Joost Rijneveld, Peter Schwabe",
     author_email='contact@sphincs.org',
@@ -75,9 +75,11 @@ setup(
     long_description_content_type="text/markdown",
     package_dir={'': 'src'},
     classifiers=[
+        'Topic :: Security :: Cryptography',
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
     ],
     install_requires=["cffi>=1.0.0"],
