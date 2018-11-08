@@ -62,9 +62,12 @@ class PySPXBindings(object):
         sm = self.ffi.new("unsigned char[]", signature + message)
         return self.lib.crypto_sign_open(m, mlen, sm, smlen, publickey) == 0
 
-    def generate_keypair(self):
+    def generate_keypair(self, seed):
         pk = self.ffi.new("unsigned char[]", self.crypto_sign_PUBLICKEYBYTES)
         sk = self.ffi.new("unsigned char[]", self.crypto_sign_SECRETKEYBYTES)
-        self.lib.crypto_sign_keypair(pk, sk)
+        if len(seed) != self.crypto_sign_SEEDBYTES:
+            raise MemoryError('Seed is of length {}, expected {}'
+                              .format(len(seed), self.crypto_sign_SEEDBYTES))
+        self.lib.crypto_sign_seed_keypair(pk, sk, seed)
 
         return bytes(pk), bytes(sk)
