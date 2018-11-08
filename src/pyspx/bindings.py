@@ -37,7 +37,7 @@ class PySPXBindings(object):
         mlen = self.ffi.cast("unsigned long long", len(message))
         smlen = self.ffi.new("unsigned long long *")
         self.lib.crypto_sign(sm, smlen, message, mlen, secretkey)
-        return bytes(sm)[:self.crypto_sign_BYTES]
+        return bytes(self.ffi.buffer(sm, self.crypto_sign_BYTES))
 
     def verify(self, message, signature, publickey):
         if not isinstance(message, bytes):
@@ -70,4 +70,4 @@ class PySPXBindings(object):
                               .format(len(seed), self.crypto_sign_SEEDBYTES))
         self.lib.crypto_sign_seed_keypair(pk, sk, seed)
 
-        return bytes(pk), bytes(sk)
+        return bytes(self.ffi.buffer(pk)), bytes(self.ffi.buffer(sk))

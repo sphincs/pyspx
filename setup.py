@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 
 from setuptools import setup
 from setuptools.command.build_py import build_py as _build_py
@@ -36,14 +37,14 @@ class build_py(_build_py):
 
     def run(self):
         create_param_wrappers()
-        super().run()
+        _build_py.run(self)
 
 
 class develop(_develop):
 
     def run(self):
         create_param_wrappers()
-        super().run()
+        _develop.run(self)
 
 
 class clean(_clean):
@@ -51,8 +52,12 @@ class clean(_clean):
     def run(self):
         for paramset in paramsets():
             os.remove(os.path.join("src", "pyspx", paramset + ".py"))
-            os.remove(os.path.join("src", "_spx_{}.abi3.so".format(paramset)))
-        super().run()
+            if sys.version_info[0] < 3:
+                objname = "_spx_{}.so".format(paramset)
+            else:
+                objname = "_spx_{}.abi3.so".format(paramset)
+            os.remove(os.path.join("src", objname))
+        _clean.run(self)
 
 
 with open('README.md') as f:
