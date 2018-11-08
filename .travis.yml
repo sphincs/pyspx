@@ -10,7 +10,8 @@ python:
 
 install:
   - python setup.py install
-  - pip install pytest
+  - pip install pytest flake8
 
 script:
   - pytest
+  - flake8
