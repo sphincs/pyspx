@@ -7,7 +7,9 @@ Currently, the bindings only wrap the reference code. Code optimized for specifi
 
 ### Installation
 
-The package is [available on PyPI](https://pypi.org/project/PySPX/) and can be installed by simply calling `pip install pyspx`. Note that it may take a few moments to compile the SPHINCS+ code for your platform.
+The package is [available on PyPI](https://pypi.org/project/PySPX/) and can be installed by simply calling `pip install pyspx`.
+
+For Linux, binary wheels are available based on the `manylinux1` docker image. On other platforms it may take a few moments to compile the SPHINCS+ code. Currently the `sphincsplus` reference code requires `openssl` for its SHA256 function. When compiling from source, be sure to install openssl with development files.
 
 ### API
 
