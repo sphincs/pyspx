@@ -88,9 +88,9 @@ def test_invalid_signature(pyspx):
 
     # incorrect type for message or key
     with pytest.raises(TypeError):
-        pyspx.sign('foo', secretkey)
+        pyspx.sign(42, secretkey)
     with pytest.raises(TypeError):
-        pyspx.sign(message, 'foo')
+        pyspx.sign(message, 42)
 
     signature = pyspx.sign(message, secretkey)
 
@@ -109,11 +109,11 @@ def test_invalid_signature(pyspx):
 
     # incorrect type for message, signature or key
     with pytest.raises(TypeError):
-        pyspx.verify('foo', signature, publickey)
+        pyspx.verify(42, signature, publickey)
     with pytest.raises(TypeError):
-        pyspx.verify(message, 'foo', publickey)
+        pyspx.verify(message, 42, publickey)
     with pytest.raises(TypeError):
-        pyspx.verify(message, signature, 'foo')
+        pyspx.verify(message, signature, 42)
 
 
 @pytest.mark.parametrize("pyspx", instances)
