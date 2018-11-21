@@ -27,3 +27,5 @@ var/
 # testing
 .coverage
 
+# temporary directory for CFFI builds
+src/sphincsplus-instances
