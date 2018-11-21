@@ -2,6 +2,7 @@ import pytest
 import os
 import random
 import importlib
+import struct
 
 paramsets = [
     'shake256_128s',
@@ -97,7 +98,10 @@ def test_invalid_signature(pyspx):
     # flip a few random bytes in the signature
     for i in range(10):
         n = random.randint(0, len(signature))
-        invsig = signature[:n] + bytes([signature[n] ^ 0xFF]) + signature[n+1:]
+        # this is extremely convoluted to be python2/3-compatible
+        byte_as_int = struct.unpack('B', signature[n:n+1])[0]
+        flippedbyte = struct.pack('B', byte_as_int ^ 0xFF)
+        invsig = signature[:n] + flippedbyte + signature[n+1:]
         assert not pyspx.verify(message, invsig, publickey)
 
     # incorrect pk length
