@@ -23,3 +23,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# testing
+.coverage
+
