@@ -51,12 +51,18 @@ class clean(_clean):
 
     def run(self):
         for paramset in paramsets():
-            os.remove(os.path.join("src", "pyspx", paramset + ".py"))
+            try:
+                os.remove(os.path.join("src", "pyspx", paramset + ".py"))
+            except:
+                pass
             if sys.version_info[0] < 3:
                 objname = "_spx_{}.so".format(paramset)
             else:
                 objname = "_spx_{}.abi3.so".format(paramset)
-            os.remove(os.path.join("src", objname))
+            try:
+                os.remove(os.path.join("src", objname))
+            except:
+                pass
         _clean.run(self)
 
 
