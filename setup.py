@@ -1,4 +1,5 @@
 import os
+import shutil
 import re
 import sys
 
@@ -63,6 +64,7 @@ class clean(_clean):
                 os.remove(os.path.join("src", objname))
             except:
                 pass
+        shutil.rmtree(os.path.join("src", "sphincsplus-instances"))
         _clean.run(self)
 
 
