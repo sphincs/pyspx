@@ -56,7 +56,10 @@ def make_ffi(paramset, paramfile):
     # any compilation is started.
     inst_dir = os.path.join(spx_inst_dir, paramset)
 
-    os.makedirs(inst_dir, exist_ok=True)
+    try:
+        os.makedirs(inst_dir)
+    except OSError:  # raised if the leaf directory already exists
+        pass
 
     for file in sources + headers:
         shutil.copy(file, inst_dir)
