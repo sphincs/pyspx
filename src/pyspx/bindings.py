@@ -71,3 +71,6 @@ class PySPXBindings(object):
         self.lib.crypto_sign_seed_keypair(pk, sk, seed)
 
         return bytes(self.ffi.buffer(pk)), bytes(self.ffi.buffer(sk))
+
+    def __repr__(self):
+        return repr(self.lib).replace("Lib", "PySPXBindings")
