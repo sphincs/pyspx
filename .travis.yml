@@ -13,7 +13,11 @@ python:
 install:
   - python setup.py install
   - pip install pytest flake8 pytest-cov
+  - pip install coveralls
 
 script:
   - pytest --cov=pyspx
   - flake8 src/pyspx
+
+after_success:
+  - coveralls
