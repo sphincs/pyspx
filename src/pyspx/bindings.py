@@ -72,5 +72,5 @@ class PySPXBindings(object):
 
         return bytes(self.ffi.buffer(pk)), bytes(self.ffi.buffer(sk))
 
-    def __repr__(self):
+    def __repr__(self):  # pragma: no cover
         return repr(self.lib).replace("Lib", "PySPXBindings")

@@ -1,0 +1,4 @@
+[run]
+omit =
+    # used by CFFI at build-time
+    **/build.py
