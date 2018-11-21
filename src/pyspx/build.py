@@ -35,6 +35,7 @@ def make_ffi(paramset, paramfile):
 
     sources = glob.glob(os.path.join(spx_ref_dir, "*.c"))
     headers = glob.glob(os.path.join(spx_ref_dir, "*.h"))
+    libraries = []
 
     if 'haraka' not in paramset:
         sources.remove(os.path.join(spx_ref_dir, "hash_haraka.c"))
@@ -42,6 +43,9 @@ def make_ffi(paramset, paramfile):
         sources.remove(os.path.join(spx_ref_dir, "hash_sha256.c"))
     if 'shake256' not in paramset:
         sources.remove(os.path.join(spx_ref_dir, "hash_shake256.c"))
+
+    if 'sha256' in paramset:
+        libraries += ['crypto']
 
     sources.remove(os.path.join(spx_ref_dir, "PQCgenKAT_sign.c"))
     sources.remove(os.path.join(spx_ref_dir, "rng.c"))
@@ -69,7 +73,7 @@ def make_ffi(paramset, paramfile):
     inst_sources = glob.glob(os.path.join(inst_dir, "*.c"))
 
     ffi.set_source("_spx_{}".format(paramset), api_contents,
-                   sources=inst_sources)
+                   sources=inst_sources, libraries=libraries)
 
     return ffi
 
