@@ -5,18 +5,18 @@ import importlib
 import struct
 
 paramsets = [
-    'shake256_128s',
-    'shake256_128f',
-    'shake256_192s',
-    'shake256_192f',
-    'shake256_256s',
-    'shake256_256f',
-    'sha256_128s',
-    'sha256_128f',
-    'sha256_192s',
-    'sha256_192f',
-    'sha256_256s',
-    'sha256_256f',
+    'shake_128s',
+    'shake_128f',
+    'shake_192s',
+    'shake_192f',
+    'shake_256s',
+    'shake_256f',
+    'sha2_128s',
+    'sha2_128f',
+    'sha2_192s',
+    'sha2_192f',
+    'sha2_256s',
+    'sha2_256f',
     'haraka_128s',
     'haraka_128f',
     'haraka_192s',
@@ -26,24 +26,24 @@ paramsets = [
 ]
 
 expected_sizes = [
-    [32, 64,  8080],
-    [32, 64,  16976],
-    [48, 96,  17064],
+    [32, 64,  7856],
+    [32, 64,  17088],
+    [48, 96,  16224],
     [48, 96,  35664],
     [64, 128, 29792],
-    [64, 128, 49216],
-    [32, 64,  8080],
-    [32, 64,  16976],
-    [48, 96,  17064],
+    [64, 128, 49856],
+    [32, 64,  7856],
+    [32, 64,  17088],
+    [48, 96,  16224],
     [48, 96,  35664],
     [64, 128, 29792],
-    [64, 128, 49216],
-    [32, 64,  8080],
-    [32, 64,  16976],
-    [48, 96,  17064],
+    [64, 128, 49856],
+    [32, 64,  7856],
+    [32, 64,  17088],
+    [48, 96,  16224],
     [48, 96,  35664],
     [64, 128, 29792],
-    [64, 128, 49216],
+    [64, 128, 49856],
 ]
 
 instances = []
@@ -54,6 +54,7 @@ for paramset in paramsets:
 
 @pytest.mark.parametrize("pyspx,sizes", zip(instances, expected_sizes))
 def test_sizes(pyspx, sizes):
+    print(pyspx, pyspx.crypto_sign_PUBLICKEYBYTES, pyspx.crypto_sign_SECRETKEYBYTES, pyspx.crypto_sign_BYTES)
     assert pyspx.crypto_sign_PUBLICKEYBYTES == sizes[0]
     assert pyspx.crypto_sign_SECRETKEYBYTES == sizes[1]
     assert pyspx.crypto_sign_BYTES == sizes[2]
