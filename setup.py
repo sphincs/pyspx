@@ -73,9 +73,9 @@ with open('README.md') as f:
 
 setup(
     name="PySPX",
-    version="0.4.0",
+    version="0.5.0",
     packages=['pyspx'],
-    author="Joost Rijneveld, Peter Schwabe",
+    author="Joost Rijneveld, Peter Schwabe, Ruben Gonzalez",
     author_email='contact@sphincs.org',
     url="https://github.com/sphincs/pyspx",
     description='Python bindings for SPHINCS+',
