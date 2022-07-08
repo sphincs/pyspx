@@ -96,14 +96,14 @@ def test_invalid_signature(pyspx):
 
     signature = pyspx.sign(message, secretkey)
 
-    # flip a few random bytes in the signature
-    for i in range(10):
+    for _ in range(10):
         n = random.randint(0, len(signature))
-        # this is extremely convoluted to be python2/3-compatible
-        byte_as_int = struct.unpack('B', signature[n:n+1])[0]
-        flippedbyte = struct.pack('B', byte_as_int ^ 0xFF)
-        invsig = signature[:n] + flippedbyte + signature[n+1:]
-        assert not pyspx.verify(message, invsig, publickey)
+
+        # Flip a random bit
+        ba_sig = bytearray(signature)
+        ba_sig[n] ^= 1
+
+        assert not pyspx.verify(message, bytes(ba_sig), publickey)    
 
     # incorrect pk length
     with pytest.raises(MemoryError):
