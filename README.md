@@ -1,4 +1,4 @@
-# PySPX [![Build Status](https://travis-ci.org/sphincs/pyspx.svg?branch=master)](https://travis-ci.org/sphincs/pyspx) [![Coverage Status](https://coveralls.io/repos/github/sphincs/pyspx/badge.svg?branch=master)](https://coveralls.io/github/sphincs/pyspx?branch=master)
+# PySPX [![SPHINCS Python Bindings](https://github.com/sphincs/pyspx/actions/workflows/python-app.yml/badge.svg)](https://github.com/sphincs/pyspx/actions/workflows/python-app.yml)
 
 This repository contains a Python package that provides bindings for [SPHINCS+](https://github.com/sphincs/sphincsplus). It provides support for all parameter sets included as part of [the SPHINCS+ submission](http://sphincs.org/data/sphincs+-specification.pdf) to [NIST's Post-Quantum Cryptography Standardization project](https://csrc.nist.gov/projects/post-quantum-cryptography).
 
