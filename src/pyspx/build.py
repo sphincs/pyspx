@@ -97,10 +97,8 @@ def make_ffi(paramset, paramfile):
     inst_param_dir = inst_dir / PARAM_DIR_NAME
 
     try:
-        os.makedirs(inst_dir)
+        os.makedirs(inst_dir, exist_ok=True)
         os.mkdir(inst_param_dir)
-    except OSError:  # raised if the leaf directory already exists
-        pass
     except FileExistsError:
         pass
     
