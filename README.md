@@ -16,28 +16,28 @@ For Linux, binary wheels are available based on the `manylinux1` docker image. O
 After installing the package, import a specific instance of SPHINCS+ as follows (e.g. for `shake256-128f`):
 
 ```
-import pyspx.shake256_128f
+import pyspx.shake_128f
 ```
 
 This exposes the following straight-forward functions. All parameters are assumed to be `bytes` objects. Similarly, the returned keys and signatures are `bytes`. The `verify` function returns a boolean indicating success or failure.
 
 ```
->>> public_key, secret_key = pyspx.shake256_128f.generate_keypair(seed)
->>> signature = pyspx.shake256_128f.sign(message, secret_key)
->>> pyspx.shake256_128f.verify(message, signature, public_key)
+>>> public_key, secret_key = pyspx.shake_128f.generate_keypair(seed)
+>>> signature = pyspx.shake_128f.sign(message, secret_key)
+>>> pyspx.shake_128f.verify(message, signature, public_key)
 True
 ```
 
 Additionally, the following attributes expose the expected sizes, as a consequence of the selected parameter set:
 
 ```
->>> pyspx.shake256_128f.crypto_sign_BYTES
+>>> pyspx.shake_128f.crypto_sign_BYTES
 29792
->>> pyspx.shake256_128f.crypto_sign_PUBLICKEYBYTES
+>>> pyspx.shake_128f.crypto_sign_PUBLICKEYBYTES
 64
->>> pyspx.shake256_128f.crypto_sign_SECRETKEYBYTES
+>>> pyspx.shake_128f.crypto_sign_SECRETKEYBYTES
 128
->>> pyspx.shake256_128f.crypto_sign_SEEDBYTES
+>>> pyspx.shake_128f.crypto_sign_SEEDBYTES
 96
 ```
 
